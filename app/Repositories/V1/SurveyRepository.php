@@ -23,4 +23,15 @@ class SurveyRepository extends BaseRepository
         $this->model = $model;
     }
 
+    /**
+     * save data to database
+     *
+     * @param Array data 
+     * @return Illuminate\Database\Eloquent\Model
+     */
+    public function saveQuestions($survey, $data)
+    {
+        return $survey->questions()->createMany($data);
+    }
+
 }
