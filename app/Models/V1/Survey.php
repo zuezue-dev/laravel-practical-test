@@ -2,14 +2,15 @@
 
 namespace App\Models\V1;
 
-use Illuminate\Support\Str;
+use App\Traits\V1\Uuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Survey extends Model
 {
     use HasFactory;
-
+    use Uuid;
+    
     protected $fillable = ['name', 'uuid'];
     /**
      * The attributes that should be hidden for arrays.
@@ -38,21 +39,5 @@ class Survey extends Model
     public function questions()
     {
         return $this->hasMany(Question::class);
-    }
-
-    /**
-     * Boot function from Laravel.
-     */
-    public static function boot()
-    {
-        parent::boot();
-        
-        static::creating(function ($model) {
-            try {
-                $model->uuid = Str::uuid();
-            } catch(\Exception $ex) {
-                return $ex->getMessage();
-            }
-        });
     }
 }

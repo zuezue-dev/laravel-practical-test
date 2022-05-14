@@ -27,9 +27,11 @@ class SurveyController extends Controller
         foreach($request->questions as $question) {
             $survey->questions()->create($question);
         }
+        $url = getSurveyFormUrl($survey);
 
         return response()->json([
-            'url' => config('app.url')."/survey/". $survey->uuid
+            'url'          => $url,
+            'description'  => 'This link is available to public and you can share this link to collect your survey.'
         ], Response::HTTP_OK);
     }
 
