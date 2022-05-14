@@ -11,7 +11,7 @@ class Survey extends Model
     use HasFactory;
     use Uuid;
 
-    protected $with = ['questions']; //Eager Load approach //need to do it for every survey model query in my case.
+    protected $with = ['questions']; //Eager Load approach //need to do it for every survey model query in this case.
 
 
     protected $fillable = ['name', 'uuid'];
@@ -51,8 +51,9 @@ class Survey extends Model
      */
     public function getRulesAttribute()
     {
-        return $this->questions->mapWithKeys(function ($question) {
+        $questionsRules = $this->questions->mapWithKeys(function ($question) {
             return [$question->key => 'required'];
         })->all();
+        return array_merge($questionsRules, ["email" => "required|email"]);
     }
 }

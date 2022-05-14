@@ -27,7 +27,7 @@ class AnswerController extends Controller
     {
         $this->validate($request, $survey->rules);
 
-        foreach ($request->all() as $key => $value) {
+        foreach ($request->except(['email']) as $key => $value) {
             if ($value === null) continue;
 
             if (gettype($value) === 'array') $value = implode(', ', $value);
@@ -41,8 +41,10 @@ class AnswerController extends Controller
             $this->repo->save($answersArr);
         }
 
+        dispatch(new \App\Jobs\SuccessEmailJob($survey, $request->email));
+
         return response()->json([
-            'message' => 'You have successfully submitted.'
+            'message' => 'Thank you for answering the survey.'
         ], Response::HTTP_OK);
     }
 }

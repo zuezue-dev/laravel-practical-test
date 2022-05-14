@@ -37,7 +37,15 @@
                     )
                 </div>
                 @endforeach
-                
+                <div class="form-group">
+                    <div class="p-3">
+                        <label style="font-size:1.1rem" class="mb-2" for="email">Email</label>
+                        <input type="email" name="email" class="form-control">
+                        @if($errors->has('email'))
+                        <div class="text-danger mt-2">{{ $errors->first('email') }}</div>
+                        @endif 
+                    </div>
+                </div>
                 <div class="p-3">
                     <button class="btn btn-primary form-control">Submit</button>
                 </div>
