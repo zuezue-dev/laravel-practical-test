@@ -2,5 +2,5 @@
 
 function getSurveyFormUrl($survey)
 {
-    return config('app.url')."/survey/". $survey->uuid;
+    return config('app.url')."/form/". $survey->uuid;
 }

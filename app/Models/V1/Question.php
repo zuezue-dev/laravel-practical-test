@@ -22,4 +22,24 @@ class Question extends Model
     {
         return $this->belongsTo(Survey::class);
     }
+
+     /**
+     * Get the answer of the question.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function answers()
+    {
+        return $this->belongsTo(Answer::class);
+    }
+
+    /**
+     * The unique key representing the question.
+     *
+     * @return string
+     */
+    public function getKeyAttribute()
+    {
+        return "question{$this->id}";
+    }
 }

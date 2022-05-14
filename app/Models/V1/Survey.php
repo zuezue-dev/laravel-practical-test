@@ -10,7 +10,10 @@ class Survey extends Model
 {
     use HasFactory;
     use Uuid;
-    
+
+    protected $with = ['questions']; //Eager Load approach //need to do it for every survey model query in my case.
+
+
     protected $fillable = ['name', 'uuid'];
     /**
      * The attributes that should be hidden for arrays.
@@ -39,5 +42,17 @@ class Survey extends Model
     public function questions()
     {
         return $this->hasMany(Question::class);
+    }
+
+    /**
+     * validation rules of the survey.
+     *
+     * @return mixed
+     */
+    public function getRulesAttribute()
+    {
+        return $this->questions->mapWithKeys(function ($question) {
+            return [$question->key => 'required'];
+        })->all();
     }
 }

@@ -23,10 +23,9 @@ class SurveyController extends Controller
     public function store(SurveyQuestionRequest $request) {
 
         $survey = $this->repo->save($request->only(['name']));
+        
+        $survey->questions()->createMany($request->questions);
 
-        foreach($request->questions as $question) {
-            $survey->questions()->create($question);
-        }
         $url = getSurveyFormUrl($survey);
 
         return response()->json([
